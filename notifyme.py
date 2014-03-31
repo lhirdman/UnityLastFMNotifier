@@ -93,13 +93,13 @@ while 1:
     data = get_data( user );
     if ( len(data['recenttracks']['track']) == 2 ):
         print "To much data overload: %d" % (len(data['recenttracks']['track']))
-        time.sleep(15)
+        time.sleep(5)
         continue
     mylist = strip_it( data );
     #print "Last knowned track id: " + oldTrackId
     if ( mylist['songid'] == oldTrackId ):
         print "No update available"
-        time.sleep(15)
+        time.sleep(5)
         continue
     print "New track id: " + mylist['songid']
     oldTrackId = mylist['songid']
@@ -118,4 +118,4 @@ while 1:
     #os.remove('cover.png')
     #send_message("Last.fm Now Playing","Some artist - A song");
     #print data['recenttracks']['track']
-    time.sleep(15)
+    time.sleep(5)
