@@ -88,6 +88,7 @@ if len(sys.argv) == 1:
 
 user = sys.argv[1]
 oldTrackId = 'xxx'
+oldTrackName = 'xxx'
 oldImgPath = 'xxx'
 while 1:
     data = get_data( user );
@@ -97,12 +98,19 @@ while 1:
         continue
     mylist = strip_it( data );
     #print "Last knowned track id: " + oldTrackId
-    if ( mylist['songid'] == oldTrackId ):
+    if ( mylist['songid'] == '' ):
+        if ( mylist['track'] == oldTrackName ):
+            print "No update available"
+            time.sleep(5)
+            continue
+    elif ( mylist['songid'] == oldTrackId ):
         print "No update available"
         time.sleep(5)
         continue
+
     print "New track id: " + mylist['songid']
     oldTrackId = mylist['songid']
+    oldTrackName = mylist['track']
     #print mylist
     #track = mylist['track']
     #artist = mylist['artist'] 
@@ -111,8 +119,11 @@ while 1:
     if ( mylist['image'] == oldImgPath ):
         print "No new image needed"
     else:
-        imgpath = get_image( mylist['image'] );
-        oldImgPath = mylist['image']
+        if ( mylist['image'] != '' ):
+            imgpath = get_image( mylist['image'] );
+            oldImgPath = mylist['image']
+        else:
+            imgpath = 'dialog-question'
     #send_message( artist, track, imgpath );
     send_message( mylist['artist'], mylist['track'] + "\nPlayed on: " + mylist['pdate'], imgpath );
     #os.remove('cover.png')
