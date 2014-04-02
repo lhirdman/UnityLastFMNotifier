@@ -31,7 +31,7 @@ def get_data( user ):
     }
     api_key="ccfcd6b800861bf2057516f1bc09ebb2"
     lmethod="user.getrecenttracks"
-    limit="1"
+    limit="5"
     uri="http://ws.audioscrobbler.com"
     path="/2.0/?method=" + lmethod + "&limit=" + limit + "&user=" + user + "&api_key=" + api_key + "&format=json"
     target = urlparse(uri+path)
@@ -50,12 +50,25 @@ def get_data( user ):
     return data
 
 def strip_it( data ):
-    track = data['recenttracks']['track']['name']
-    artist = data['recenttracks']['track']['artist']['#text']
-    image = data['recenttracks']['track']['image'][1]['#text']
+    data = data['recenttracks']['track'][0]
+    track = data['name']
+    artist = data['artist']['#text']
+    image = data['image'][1]['#text']
 #    playtime = datetime.strftime('',datetime.utcnow() - datetime.strptime(data['recenttracks']['track']['date']['#text'], '%d %b %Y, %H:%M')
-    playtime = data['recenttracks']['track']['date']['#text']
-    songid = data['recenttracks']['track']['mbid']
+#    print "The data:"
+#    print data
+    if ( data.has_key('date') ):
+        playtime = data['date']['#text']
+    else:
+        playtime = time.asctime( time.localtime(time.time()) )
+    print "Playtime: " + playtime
+    songid = data['mbid']
+#    track = data['recenttracks']['track']['name']
+#    artist = data['recenttracks']['track']['artist']['#text']
+#    image = data['recenttracks']['track']['image'][1]['#text']
+#    playtime = datetime.strftime('',datetime.utcnow() - datetime.strptime(data['recenttracks']['track']['date']['#text'], '%d %b %Y, %H:%M')
+#    playtime = data['recenttracks']['track']['date']['#text']
+#    songid = data['recenttracks']['track']['mbid']
 #    print playtime
     mylist = {
         'track': track,
@@ -92,10 +105,10 @@ oldTrackName = 'xxx'
 oldImgPath = 'xxx'
 while 1:
     data = get_data( user );
-    if ( len(data['recenttracks']['track']) == 2 ):
-        print "To much data overload: %d" % (len(data['recenttracks']['track']))
-        time.sleep(5)
-        continue
+#    if ( len(data['recenttracks']['track']) == 2 ):
+#        print "To much data overload: %d" % (len(data['recenttracks']['track']))
+#        time.sleep(5)
+#        continue
     mylist = strip_it( data );
     #print "Last knowned track id: " + oldTrackId
     if ( mylist['songid'] == '' ):
