@@ -50,6 +50,13 @@ def get_data( user ):
     return data
 
 def strip_it( data ):
+    if ( data.has_key('recenttracks'):
+        mydata = data['recenttracks']
+#        if ( mydata.has_key('track') ):
+#            print "Track info found"
+    else:
+        print "Track info not found"
+        return ( {'error', '1'} )
     data = data['recenttracks']['track'][0]
     track = data['name']
     artist = data['artist']['#text']
@@ -61,7 +68,7 @@ def strip_it( data ):
         playtime = data['date']['#text']
     else:
         playtime = time.asctime( time.localtime(time.time()) )
-    print "Playtime: " + playtime
+#    print "Playtime: " + playtime
     songid = data['mbid']
 #    track = data['recenttracks']['track']['name']
 #    artist = data['recenttracks']['track']['artist']['#text']
@@ -110,14 +117,17 @@ while 1:
 #        time.sleep(5)
 #        continue
     mylist = strip_it( data );
+    if ( mylist.has_key('error') ):
+        print "Error occured: " + mylist['error']
+        continue
     #print "Last knowned track id: " + oldTrackId
     if ( mylist['songid'] == '' ):
         if ( mylist['track'] == oldTrackName ):
-            print "No update available"
+#            print "No update available"
             time.sleep(5)
             continue
     elif ( mylist['songid'] == oldTrackId ):
-        print "No update available"
+#        print "No update available"
         time.sleep(5)
         continue
 
