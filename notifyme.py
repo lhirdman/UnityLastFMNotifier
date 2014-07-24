@@ -117,7 +117,7 @@ oldImgPath = 'xxx'
 while 1:
     data = get_data( user );
     if ( data.has_key('mystatus') ):
-        break
+        continue
 
 #    if ( len(data['recenttracks']['track']) == 2 ):
 #        print "To much data overload: %d" % (len(data['recenttracks']['track']))
