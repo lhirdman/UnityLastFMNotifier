@@ -43,14 +43,18 @@ def get_data( user ):
         method,
         body,
         headers)
-    data = json.loads(content)
+    if ( response.status==200 ):
+      data = json.loads(content)
+    else:
+      print response.status
+      data = { 'mystatus': response.status }
 #    print uri + path
 #    print json.dumps(content, sort_keys=True, indent=4, separators=(',', ': '))
 #    print data['recenttracks']
     return data
 
 def strip_it( data ):
-    if ( data.has_key('recenttracks'):
+    if ( data.has_key('recenttracks') ):
         mydata = data['recenttracks']
 #        if ( mydata.has_key('track') ):
 #            print "Track info found"
@@ -112,6 +116,9 @@ oldTrackName = 'xxx'
 oldImgPath = 'xxx'
 while 1:
     data = get_data( user );
+    if ( data.has_key('mystatus') ):
+        break
+
 #    if ( len(data['recenttracks']['track']) == 2 ):
 #        print "To much data overload: %d" % (len(data['recenttracks']['track']))
 #        time.sleep(5)
