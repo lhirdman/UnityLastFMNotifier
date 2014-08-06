@@ -60,7 +60,7 @@ def strip_it( data ):
 #            print "Track info found"
     else:
         print "Track info not found"
-        return ( {'error', '1'} )
+        return ( {'error': '1'} )
     data = data['recenttracks']['track'][0]
     track = data['name']
     artist = data['artist']['#text']
