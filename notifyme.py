@@ -61,7 +61,11 @@ def strip_it( data ):
     else:
         print "Track info not found"
         return ( {'error': '1'} )
-    data = data['recenttracks']['track'][0]
+    if ( mydata.has_key('track') ):
+        data = data['recenttracks']['track'][0]
+    else:
+        print "Track info not found"
+        return ( {'error': '2'} )
     track = data['name']
     artist = data['artist']['#text']
     image = data['image'][1]['#text']
