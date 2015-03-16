@@ -16,6 +16,7 @@ except ImportError:
     from urllib.parse import urlparse
 
 def send_message( title, message, image ):
+    pynotify.uninit()
     if not pynotify.init("Last.FM"):
         sys.exit(1)
     notice = pynotify.Notification(title, message, image)
