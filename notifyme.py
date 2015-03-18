@@ -62,6 +62,7 @@ def strip_it( data ):
     else:
         print "Track info not found"
         return ( {'error': '1'} )
+        time.sleep(5)
     if ( mydata.has_key('track') ):
         data = data['recenttracks']['track'][0]
     else:
