@@ -73,6 +73,7 @@ def strip_it( data ):
         return ( {'error': '2'} )
     track = data['name']
     artist = data['artist']['#text']
+    album = data['album']['#text']
     image = data['image'][1]['#text']
 #    playtime = datetime.strftime('',datetime.utcnow() - datetime.strptime(data['recenttracks']['track']['date']['#text'], '%d %b %Y, %H:%M')
 #    print "The data:"
@@ -95,7 +96,8 @@ def strip_it( data ):
         'artist':  artist,
         'image': image,
         'pdate': playtime,
-        'songid': songid
+        'songid': songid,
+        'album': album
     }
     return mylist
 
@@ -164,7 +166,7 @@ while 1:
         else:
             imgpath = 'dialog-question'
     #send_message( artist, track, imgpath );
-    send_message( mylist['artist'], mylist['track'] + "\nPlayed on: " + mylist['pdate'], imgpath );
+    send_message( mylist['artist'], mylist['track'] + "\n" + mylist['album'] + "\nPlayed on: " + mylist['pdate'], imgpath );
     #os.remove('cover.png')
     #send_message("Last.fm Now Playing","Some artist - A song");
     #print data['recenttracks']['track']
