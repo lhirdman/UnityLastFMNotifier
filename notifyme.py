@@ -62,9 +62,12 @@ def strip_it( data ):
     else:
         print "Track info not found"
         return ( {'error': '1'} )
-        time.sleep(5)
+        time.sleep(10)
     if ( mydata.has_key('track') ):
-        data = data['recenttracks']['track'][0]
+        try:
+            data = data['recenttracks']['track'][0]
+        except:
+            print "failed to get data"
     else:
         print "Track info not found"
         return ( {'error': '2'} )
@@ -137,11 +140,11 @@ while 1:
     if ( mylist['songid'] == '' ):
         if ( mylist['track'] == oldTrackName ):
 #            print "No update available"
-            time.sleep(5)
+            time.sleep(10)
             continue
     elif ( mylist['songid'] == oldTrackId ):
 #        print "No update available"
-        time.sleep(5)
+        time.sleep(10)
         continue
 
     print "New track id: " + mylist['songid']
@@ -165,4 +168,4 @@ while 1:
     #os.remove('cover.png')
     #send_message("Last.fm Now Playing","Some artist - A song");
     #print data['recenttracks']['track']
-    time.sleep(5)
+    time.sleep(10)
