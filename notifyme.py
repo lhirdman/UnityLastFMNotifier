@@ -39,11 +39,15 @@ def get_data( user ):
     method='GET'
     body=''
     h = http.Http()
-    response, content = h.request(
-        target.geturl(),
-        method,
-        body,
-        headers)
+    try:
+        response, content = h.request(
+            target.geturl(),
+            method,
+            body,
+            headers)
+    except http.HttpLib2Error:
+        print "ResponseNotReady Error"
+        return ( {'error': '3'} )
     if ( response.status==200 ):
       data = json.loads(content)
     else:
@@ -125,9 +129,12 @@ user = sys.argv[1]
 oldTrackId = 'xxx'
 oldTrackName = 'xxx'
 oldImgPath = 'xxx'
+cnt = 0
 while 1:
     data = get_data( user );
     if ( data.has_key('mystatus') ):
+        continue
+    elif ( data.has_key('error') ):
         continue
 
 #    if ( len(data['recenttracks']['track']) == 2 ):
@@ -142,11 +149,20 @@ while 1:
     if ( mylist['songid'] == '' ):
         if ( mylist['track'] == oldTrackName ):
 #            print "No update available"
-            time.sleep(10)
+            cnt = cnt + 1
+            if ( cnt >= 60 ):
+                time.sleep(300)
+                cnt = 0
+            else:
+                time.sleep(10)
             continue
     elif ( mylist['songid'] == oldTrackId ):
 #        print "No update available"
-        time.sleep(10)
+        if ( cnt >= 60 ):
+            time.sleep(300)
+            cnt = 0
+        else:
+            time.sleep(10)
         continue
 
     print "New track id: " + mylist['songid']
