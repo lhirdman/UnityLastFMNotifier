@@ -129,6 +129,7 @@ user = sys.argv[1]
 oldTrackId = 'xxx'
 oldTrackName = 'xxx'
 oldImgPath = 'xxx'
+oldPDate = '17 Jul 1975, 10:11'
 cnt = 0
 while 1:
     data = get_data( user );
@@ -164,10 +165,19 @@ while 1:
         else:
             time.sleep(10)
         continue
+    elif ( mylist['pdate'] <= oldPDate ):
+        print "Old song returned"
+        if ( cnt >= 60 ):
+            time.sleep(300)
+            cnt = 0
+        else:
+            time.sleep(10)
+        continue
 
     print "New track id: " + mylist['songid']
     oldTrackId = mylist['songid']
     oldTrackName = mylist['track']
+    oldPDate = mylist['pdate']
     #print mylist
     #track = mylist['track']
     #artist = mylist['artist'] 
