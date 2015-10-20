@@ -20,6 +20,7 @@ def send_message( title, message, image ):
     if not pynotify.init("Last.FM"):
         sys.exit(1)
     notice = pynotify.Notification(title, message, image)
+    print title + " - " + message
     if not notice.show():
         print "Failed to send notification"
         sys.exit(1)
