@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
-
 import pygtk
 pygtk.require('2.0')
 import pynotify
@@ -181,7 +180,7 @@ while 1:
     oldPDate = mylist['pdate']
     #print mylist
     #track = mylist['track']
-    #artist = mylist['artist'] 
+    #artist = mylist['artist']
     #image = mylist['image']
     #get_image( image );
     if ( mylist['image'] == oldImgPath ):
